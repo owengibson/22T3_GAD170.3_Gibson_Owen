@@ -40,6 +40,10 @@ public class PlayerMovement : MonoBehaviour
     // To handle vertical movement
     private Vector3 velocity;
 
+    private bool movementEnabled = true;
+    private float xValue;
+    private float zValue;
+
     private void Start()
     {
         // If the variable "characterController" is empty...
@@ -54,39 +58,49 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        // These lines let the script rotate the character based on the mouse moving
-        yaw += horizontalSpeed * Input.GetAxis("Mouse X");
-        pitch -= verticalSpeed * Input.GetAxis("Mouse Y");
-
-        // Get the Left/Right and Forward/Back values of the input being used (WASD, Joystick etc.)
-        float xValue = Input.GetAxis("Horizontal");
-        float zValue = Input.GetAxis("Vertical");
-
-        // Let the character jump if they are on the ground and they press the jump button
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (movementEnabled)
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
+            // These lines let the script rotate the character based on the mouse moving
+            yaw += horizontalSpeed * Input.GetAxis("Mouse X");
+            pitch -= verticalSpeed * Input.GetAxis("Mouse Y");
+
+            // Get the Left/Right and Forward/Back values of the input being used (WASD, Joystick etc.)
+            xValue = Input.GetAxis("Horizontal");
+            zValue = Input.GetAxis("Vertical");
+
+            // Let the character jump if they are on the ground and they press the jump button
+            if (Input.GetButtonDown("Jump") && isGrounded)
+            {
+                velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
+            }
+
+            // Rotate the character based off those mouse values we collected earlier
+            transform.eulerAngles = new Vector3(0.0f, yaw, 0.0f);
+            playerCamera.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
+
+            // This is stealing the data about the character being on the ground from the character controller
+            isGrounded = characterController.isGrounded;
+
+            if (isGrounded && velocity.y < 0)
+            {
+                velocity.y = -2f;
+            }
+
+
         }
-
-        // Rotate the character based off those mouse values we collected earlier
-        transform.eulerAngles = new Vector3(0.0f, yaw, 0.0f);
-        playerCamera.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
-
-        // This is stealing the data about the character being on the ground from the character controller
-        isGrounded = characterController.isGrounded;
-
-        if (isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
-
         // This fakes gravity!
         velocity.y += gravity * Time.deltaTime;
-
         // This takes the Left/Right and Forward/Back values to build a vector
         Vector3 movementVector = transform.right * xValue + transform.forward * zValue;
 
         // Finally, it applies that vector it just made to the character
         characterController.Move(movementVector * movementSpeed * Time.deltaTime + velocity * Time.deltaTime);
+    }
+
+    public void DisableMovement()
+    {
+        movementEnabled = false;
+        xValue = 0.0f;
+        zValue = 0.0f;
     }
 }
