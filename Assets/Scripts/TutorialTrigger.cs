@@ -2,30 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialTrigger : MonoBehaviour
+namespace OwenGibson
 {
-    [SerializeField] private GameObject panelPrefab;
-    private GameObject panel;
 
-    private void OnTriggerEnter(Collider other)
+    public class TutorialTrigger : MonoBehaviour
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            Debug.Log("Tutorial popup");
+        [SerializeField] private GameObject panelPrefab;
+        private GameObject panel;
 
-            if (panel == null)
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("Player"))
             {
-                panel = Instantiate(panelPrefab, GameObject.FindObjectOfType<Canvas>().transform);
+                Debug.Log("Tutorial popup");
+
+                if (panel == null)
+                {
+                    panel = Instantiate(panelPrefab, GameObject.FindObjectOfType<Canvas>().transform);
+                }
             }
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
+        private void OnTriggerExit(Collider other)
         {
-            Debug.Log("Destroy tutorial");
-            Destroy(panel);
+            if (other.gameObject.tag == "Player")
+            {
+                Debug.Log("Destroy tutorial");
+                Destroy(panel);
+            }
         }
     }
 }

@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneManagerScript : MonoBehaviour
+namespace OwenGibson
 {
-    public void RestartScene()
+    public class SceneManagerScript : MonoBehaviour
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        public void RestartScene()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 }
