@@ -54,6 +54,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         playerCamera = FindObjectOfType<Camera>();
+
+        Cursor.visible = false;
     }
 
     private void Update()
@@ -76,7 +78,10 @@ public class PlayerMovement : MonoBehaviour
 
             // Rotate the character based off those mouse values we collected earlier
             transform.eulerAngles = new Vector3(0.0f, yaw, 0.0f);
-            playerCamera.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
+            if (-90 < pitch && pitch < 90)
+            {
+                playerCamera.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
+            }
 
             // This is stealing the data about the character being on the ground from the character controller
             isGrounded = characterController.isGrounded;
@@ -102,5 +107,6 @@ public class PlayerMovement : MonoBehaviour
         movementEnabled = false;
         xValue = 0.0f;
         zValue = 0.0f;
+
     }
 }
