@@ -8,7 +8,15 @@ namespace OwenGibson
     public class LecternTrigger : MonoBehaviour
     {
         [SerializeField] private Material material;
+        [SerializeField] private GameObject leverPanelPrefab;
+        private GameObject leverPanel;
         private bool inTriggerArea = false;
+        private bool isGateOpen = false;
+
+        private void Start()
+        {
+            
+        }
 
         private void OnTriggerEnter(Collider other)
         {
@@ -16,12 +24,18 @@ namespace OwenGibson
             {
                 Debug.Log("in lectern trigger area");
                 inTriggerArea = true;
+
+                if (leverPanel == null)
+                {
+                    leverPanel = Instantiate(leverPanelPrefab, GameObject.FindObjectOfType<Canvas>().transform);
+                }
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
             inTriggerArea = false;
+            Destroy(leverPanel);
         }
 
         private void Update()
@@ -30,14 +44,19 @@ namespace OwenGibson
             if (Input.GetKeyDown(KeyCode.E) && inTriggerArea)
             {
                 Debug.Log("pressed e");
-                if (material.color == Color.red)
+                if (!isGateOpen)
                 {
                     material.color = Color.green;
+                    GameObject.Find("Gate").GetComponent<GateController>().OpenGate();
+                    isGateOpen = true;
                 }
                 else
                 {
                     material.color = Color.red;
+                    GameObject.Find("Gate").GetComponent<GateController>().CloseGate();
+                    isGateOpen = false;
                 }
+                
             }
         }
 
