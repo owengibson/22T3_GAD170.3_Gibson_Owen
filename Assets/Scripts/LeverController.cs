@@ -4,22 +4,23 @@ using UnityEngine;
 
 namespace OwenGibson
 {
-    public class GateController : MonoBehaviour
+    public class LeverController : MonoBehaviour
     {
         private Animator anim;
+        // Start is called before the first frame update
         private void Start()
         {
             anim = GetComponent<Animator>();
         }
 
-        public void OpenGate()
+        public void LeverDown()
         {
-            anim.Play("Gate Open");
+            anim.Play("Lever Down");
         }
 
-        public void CloseGate()
+        public void LeverUp()
         {
-            anim.Play("Gate Close");
+            anim.Play("Lever Up");
         }
     }
 }
