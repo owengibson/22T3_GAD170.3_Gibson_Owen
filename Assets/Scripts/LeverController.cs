@@ -7,7 +7,7 @@ namespace OwenGibson
     public class LeverController : MonoBehaviour
     {
         private Animator anim;
-        // Start is called before the first frame update
+
         private void Start()
         {
             anim = GetComponent<Animator>();

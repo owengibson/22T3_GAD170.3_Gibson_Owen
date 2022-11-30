@@ -9,6 +9,12 @@ namespace OwenGibson
     {
         [SerializeField] private GameObject panelPrefab;
         private GameObject panel;
+        private Canvas canvas;
+
+        private void Start()
+        {
+            canvas = FindObjectOfType<Canvas>();
+        }
 
         private void OnTriggerEnter(Collider other)
         {
@@ -18,7 +24,7 @@ namespace OwenGibson
 
                 if (panel == null)
                 {
-                    panel = Instantiate(panelPrefab, GameObject.FindObjectOfType<Canvas>().transform);
+                    panel = Instantiate(panelPrefab, canvas.transform);
                 }
             }
         }

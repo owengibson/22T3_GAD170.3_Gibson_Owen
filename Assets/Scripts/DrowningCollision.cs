@@ -11,6 +11,7 @@ namespace OwenGibson
         private GameObject player;
         private SceneManagerScript sceneManager;
         private GameObject panel;
+        private Canvas canvas;
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -20,7 +21,7 @@ namespace OwenGibson
                 
                 Debug.Log("You have drowned.");
 
-                panel = Instantiate(drownPanel, FindObjectOfType<Canvas>().transform);
+                panel = Instantiate(drownPanel, canvas.transform);
                 player.GetComponent<PlayerMovement>().DisableMovement();
                 panel.GetComponentInChildren<Button>().onClick.AddListener(sceneManager.RestartScene);
 
@@ -32,6 +33,7 @@ namespace OwenGibson
         {
             player = GameObject.Find("Player");
             sceneManager = FindObjectOfType<SceneManagerScript>();
+            canvas = FindObjectOfType<Canvas>();
         }
     }
 }

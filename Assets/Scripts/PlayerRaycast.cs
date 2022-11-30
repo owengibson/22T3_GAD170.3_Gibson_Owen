@@ -8,21 +8,21 @@ namespace OwenGibson
     {
         [Range(1f, 10f)]
         [SerializeField] float rayLength = 4.0f;
-        public bool lookingAtLectern = false;
+        public string lookingAt;
+
         private void FixedUpdate()
         {
             Ray ray = new Ray(transform.position, transform.forward);
-            RaycastHit hit;
 
             Debug.DrawRay(transform.position, transform.forward * rayLength);
 
-            if (Physics.Raycast(ray, out hit, rayLength) && hit.transform.gameObject.name == "Lectern")
+            if (Physics.Raycast(ray, out RaycastHit hit, rayLength))
             {
-                lookingAtLectern = true;
+                lookingAt = hit.collider.gameObject.name;
             }
             else
             {
-                lookingAtLectern = false;
+                lookingAt = "";
             }
         }
     }
