@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,12 +16,17 @@ namespace OwenGibson
         private Canvas canvas;
         private bool isGateOpen = false;
 
+        public delegate void GateEvent();
+        public event GateEvent LeverDown;
+        public event GateEvent LeverUp;
+
         private void Start()
         {
             gateController = GameObject.Find("Gate").GetComponent<GateController>();
             leverController = GetComponentInChildren<LeverController>();
             playerRaycast = GameObject.Find("Player/Camera").GetComponent<PlayerRaycast>();
             canvas = FindObjectOfType<Canvas>();
+
         }
 
         private void Update()
@@ -34,14 +40,12 @@ namespace OwenGibson
                     Debug.Log("pressed e");
                     if (!isGateOpen)
                     {
-                        leverController.LeverDown();
-                        gateController.OpenGate();
+                        LeverDown();
                         isGateOpen = true;
                     }
                     else
                     {
-                        leverController.LeverUp();
-                        gateController.CloseGate();
+                        LeverUp();
                         isGateOpen = false;
                     }
 

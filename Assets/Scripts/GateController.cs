@@ -13,14 +13,29 @@ namespace OwenGibson
             anim = GetComponent<Animator>();
         }
 
-        public void OpenGate()
+        private void OpenGate()
         {
             anim.Play("Gate Open");
         }
 
-        public void CloseGate()
+        private void CloseGate()
         {
             anim.Play("Gate Close");
         }
+
+        private void OnEnable()
+        {
+            FindObjectOfType<GateToggleLectern>().LeverDown += OpenGate;
+            FindObjectOfType<GateToggleLectern>().LeverUp += CloseGate;
+
+        }
+
+        private void OnDisable()
+        {
+            FindObjectOfType<GateToggleLectern>().LeverDown -= OpenGate;
+            FindObjectOfType<GateToggleLectern>().LeverUp -= CloseGate;
+        }
     }
+
+    
 }

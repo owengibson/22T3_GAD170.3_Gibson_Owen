@@ -23,7 +23,7 @@ namespace OwenGibson
             boxColliders = GetComponentsInChildren<BoxCollider>();
         }
 
-        public void TurnTangible()
+        private void TurnTangible()
         {
             foreach(BoxCollider collider in boxColliders)
             {
@@ -38,7 +38,7 @@ namespace OwenGibson
             isTangible = true;
         }
 
-        public void TurnIntangible()
+        private void TurnIntangible()
         {
             foreach(BoxCollider collider in boxColliders)
             {
@@ -51,6 +51,19 @@ namespace OwenGibson
 
                 isTangible = false;
             }
+        }
+
+        private void OnEnable()
+        {
+            FindObjectOfType<TangibleToggleLectern>().LeverDown += TurnTangible;
+            FindObjectOfType<TangibleToggleLectern>().LeverUp += TurnIntangible;
+
+        }
+
+        private void OnDisable()
+        {
+            FindObjectOfType<TangibleToggleLectern>().LeverDown -= TurnTangible;
+            FindObjectOfType<TangibleToggleLectern>().LeverUp -= TurnIntangible;
         }
     }
 }

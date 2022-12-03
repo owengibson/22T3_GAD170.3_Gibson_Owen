@@ -7,20 +7,50 @@ namespace OwenGibson
     public class LeverController : MonoBehaviour
     {
         private Animator anim;
+        private GameObject parentLectern;
 
         private void Start()
         {
             anim = GetComponent<Animator>();
         }
 
-        public void LeverDown()
+        private void MoveLeverDown()
         {
             anim.Play("Lever Down");
         }
 
-        public void LeverUp()
+        private void MoveLeverUp()
         {
             anim.Play("Lever Up");
+        }
+
+        private void OnEnable()
+        {
+            parentLectern = gameObject.transform.parent.transform.parent.gameObject;
+            if (parentLectern.name == "Tangible Toggle Lectern")
+            {
+                FindObjectOfType<TangibleToggleLectern>().LeverDown += MoveLeverDown;
+                FindObjectOfType<TangibleToggleLectern>().LeverUp += MoveLeverUp;
+            }
+            else if (parentLectern.name == "Gate Toggle Lectern")
+            {
+                FindObjectOfType<GateToggleLectern>().LeverDown += MoveLeverDown;
+                FindObjectOfType<GateToggleLectern>().LeverUp += MoveLeverUp;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (parentLectern.name == "Tangible Toggle Lectern")
+            {
+                FindObjectOfType<TangibleToggleLectern>().LeverDown -= MoveLeverDown;
+                FindObjectOfType<TangibleToggleLectern>().LeverUp -= MoveLeverUp;
+            }
+            else if (parentLectern.name == "Gate Toggle Lectern")
+            {
+                FindObjectOfType<GateToggleLectern>().LeverDown -= MoveLeverDown;
+                FindObjectOfType<GateToggleLectern>().LeverUp -= MoveLeverUp;
+            }
         }
     }
 }

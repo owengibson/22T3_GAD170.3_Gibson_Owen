@@ -16,6 +16,10 @@ namespace OwenGibson
         private PlayerRaycast playerRaycast;
         private Canvas canvas;
 
+        public delegate void BridgeEvent();
+        public event BridgeEvent LeverDown;
+        public event BridgeEvent LeverUp;
+
         void Start()
         {
             bridgeController = GameObject.Find("Bridge").GetComponent<BridgeController>();
@@ -35,13 +39,11 @@ namespace OwenGibson
                 {
                     if (!bridgeController.isTangible)
                     {
-                        bridgeController.TurnTangible();
-                        leverController.LeverDown();
+                        if (LeverDown != null) LeverDown();
                     }
                     else
                     {
-                        bridgeController.TurnIntangible();
-                        leverController.LeverUp();
+                        if (LeverUp != null) LeverUp();
                     }
                 }
             }
@@ -49,6 +51,16 @@ namespace OwenGibson
             {
                 if (leverPanel != null) Destroy(leverPanel);
             }
+        }
+
+        public void Subscribe()
+        {
+            
+        }
+
+        public void Unsubscribe()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
