@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace OwenGibson
@@ -10,11 +7,10 @@ namespace OwenGibson
     {
         [SerializeField] private GameObject leverPanelPrefab;
 
-        private BridgeController bridgeController;
-        private LeverController leverController;
         private GameObject leverPanel;
         private PlayerRaycast playerRaycast;
         private Canvas canvas;
+        private bool isBridgeTangible = false;
 
         public delegate void BridgeEvent();
         public event BridgeEvent LeverDown;
@@ -22,8 +18,6 @@ namespace OwenGibson
 
         void Start()
         {
-            bridgeController = GameObject.Find("Bridge").GetComponent<BridgeController>();
-            leverController = GetComponentInChildren<LeverController>();
             playerRaycast = GameObject.Find("Player/Camera").GetComponent<PlayerRaycast>();
             canvas = FindObjectOfType<Canvas>();
         }
@@ -37,13 +31,15 @@ namespace OwenGibson
 
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    if (!bridgeController.isTangible)
+                    if (!isBridgeTangible)
                     {
-                        if (LeverDown != null) LeverDown();
+                        LeverDown?.Invoke();
+                        isBridgeTangible = true;
                     }
                     else
                     {
-                        if (LeverUp != null) LeverUp();
+                        LeverUp?.Invoke();
+                        isBridgeTangible = false;
                     }
                 }
             }
@@ -51,16 +47,6 @@ namespace OwenGibson
             {
                 if (leverPanel != null) Destroy(leverPanel);
             }
-        }
-
-        public void Subscribe()
-        {
-            
-        }
-
-        public void Unsubscribe()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

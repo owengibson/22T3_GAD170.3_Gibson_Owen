@@ -10,8 +10,6 @@ namespace OwenGibson
         [SerializeField] private GameObject leverPanelPrefab;
 
         private GameObject leverPanel;
-        private GateController gateController;
-        private LeverController leverController;
         private PlayerRaycast playerRaycast;
         private Canvas canvas;
         private bool isGateOpen = false;
@@ -22,8 +20,6 @@ namespace OwenGibson
 
         private void Start()
         {
-            gateController = GameObject.Find("Gate").GetComponent<GateController>();
-            leverController = GetComponentInChildren<LeverController>();
             playerRaycast = GameObject.Find("Player/Camera").GetComponent<PlayerRaycast>();
             canvas = FindObjectOfType<Canvas>();
 
@@ -40,12 +36,12 @@ namespace OwenGibson
                     Debug.Log("pressed e");
                     if (!isGateOpen)
                     {
-                        LeverDown();
+                        LeverDown?.Invoke();
                         isGateOpen = true;
                     }
                     else
                     {
-                        LeverUp();
+                        LeverUp?.Invoke();
                         isGateOpen = false;
                     }
 

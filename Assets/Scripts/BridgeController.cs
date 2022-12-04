@@ -9,8 +9,6 @@ namespace OwenGibson
         [SerializeField] private Material tangibleMaterial;
         [SerializeField] private Material intangibleMaterial;
 
-        public bool isTangible;
-
         private BoxCollider[] boxColliders;
         private GameObject bridge;
         private GameObject gate;
@@ -34,8 +32,6 @@ namespace OwenGibson
 
             bridge.GetComponent<MeshRenderer>().material = tangibleMaterial;
             gate.GetComponent<MeshRenderer>().material = tangibleMaterial;
-
-            isTangible = true;
         }
 
         private void TurnIntangible()
@@ -48,8 +44,6 @@ namespace OwenGibson
 
                 bridge.GetComponent<MeshRenderer>().material = intangibleMaterial;
                 gate.GetComponent<MeshRenderer>().material = intangibleMaterial;
-
-                isTangible = false;
             }
         }
 
