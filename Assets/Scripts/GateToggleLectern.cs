@@ -14,10 +14,6 @@ namespace OwenGibson
         private Canvas canvas;
         private bool isGateOpen = false;
 
-        public delegate void GateEvent();
-        public event GateEvent LeverDown;
-        public event GateEvent LeverUp;
-
         private void Start()
         {
             playerRaycast = GameObject.Find("Player/Camera").GetComponent<PlayerRaycast>();
@@ -36,12 +32,12 @@ namespace OwenGibson
                     Debug.Log("pressed e");
                     if (!isGateOpen)
                     {
-                        LeverDown?.Invoke();
+                        EventsManager.GateLeverDown?.Invoke();
                         isGateOpen = true;
                     }
                     else
                     {
-                        LeverUp?.Invoke();
+                        EventsManager.GateLeverUp?.Invoke();
                         isGateOpen = false;
                     }
 

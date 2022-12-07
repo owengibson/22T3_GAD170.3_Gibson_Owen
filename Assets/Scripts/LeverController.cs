@@ -29,13 +29,13 @@ namespace OwenGibson
             parentLectern = gameObject.transform.parent.transform.parent.gameObject;
             if (parentLectern.name == "Tangible Toggle Lectern")
             {
-                FindObjectOfType<TangibleToggleLectern>().LeverDown += MoveLeverDown;
-                FindObjectOfType<TangibleToggleLectern>().LeverUp += MoveLeverUp;
+                EventsManager.TangibilityLeverDown += MoveLeverDown;
+                EventsManager.TangibilityLeverUp += MoveLeverUp;
             }
             else if (parentLectern.name == "Gate Toggle Lectern")
             {
-                FindObjectOfType<GateToggleLectern>().LeverDown += MoveLeverDown;
-                FindObjectOfType<GateToggleLectern>().LeverUp += MoveLeverUp;
+                EventsManager.GateLeverDown += MoveLeverDown;
+                EventsManager.GateLeverUp += MoveLeverUp;
             }
         }
 
@@ -43,13 +43,13 @@ namespace OwenGibson
         {
             if (parentLectern.name == "Tangible Toggle Lectern")
             {
-                FindObjectOfType<TangibleToggleLectern>().LeverDown -= MoveLeverDown;
-                FindObjectOfType<TangibleToggleLectern>().LeverUp -= MoveLeverUp;
+                EventsManager.TangibilityLeverDown -= MoveLeverDown;
+                EventsManager.TangibilityLeverUp -= MoveLeverUp;
             }
             else if (parentLectern.name == "Gate Toggle Lectern")
             {
-                FindObjectOfType<GateToggleLectern>().LeverDown -= MoveLeverDown;
-                FindObjectOfType<GateToggleLectern>().LeverUp -= MoveLeverUp;
+                EventsManager.GateLeverDown -= MoveLeverDown;
+                EventsManager.GateLeverUp -= MoveLeverUp;
             }
         }
     }

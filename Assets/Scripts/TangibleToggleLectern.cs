@@ -12,10 +12,6 @@ namespace OwenGibson
         private Canvas canvas;
         private bool isBridgeTangible = false;
 
-        public delegate void BridgeEvent();
-        public event BridgeEvent LeverDown;
-        public event BridgeEvent LeverUp;
-
         void Start()
         {
             playerRaycast = GameObject.Find("Player/Camera").GetComponent<PlayerRaycast>();
@@ -33,12 +29,12 @@ namespace OwenGibson
                 {
                     if (!isBridgeTangible)
                     {
-                        LeverDown?.Invoke();
+                        EventsManager.TangibilityLeverDown?.Invoke();
                         isBridgeTangible = true;
                     }
                     else
                     {
-                        LeverUp?.Invoke();
+                        EventsManager.TangibilityLeverUp?.Invoke();
                         isBridgeTangible = false;
                     }
                 }

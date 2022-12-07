@@ -25,15 +25,15 @@ namespace OwenGibson
 
         private void OnEnable()
         {
-            FindObjectOfType<GateToggleLectern>().LeverDown += OpenGate;
-            FindObjectOfType<GateToggleLectern>().LeverUp += CloseGate;
+            EventsManager.GateLeverDown += OpenGate;
+            EventsManager.GateLeverUp += CloseGate;
 
         }
 
         private void OnDisable()
         {
-            FindObjectOfType<GateToggleLectern>().LeverDown -= OpenGate;
-            FindObjectOfType<GateToggleLectern>().LeverUp -= CloseGate;
+            EventsManager.GateLeverDown -= OpenGate;
+            EventsManager.GateLeverUp -= CloseGate;
         }
     }
 

@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace OwenGibson
 {
     public class DrowningCollision : MonoBehaviour
     {
-        [SerializeField] private GameObject drownPanel;
+        [SerializeField] private GameObject drownPanelPrefab;
         private GameObject player;
-        private SceneManagerScript sceneManager;
         private GameObject panel;
         private Canvas canvas;
 
@@ -21,9 +21,8 @@ namespace OwenGibson
                 
                 Debug.Log("You have drowned.");
 
-                panel = Instantiate(drownPanel, canvas.transform);
+                panel = Instantiate(drownPanelPrefab, canvas.transform);
                 player.GetComponent<PlayerMovement>().DisableMovement();
-                panel.GetComponentInChildren<Button>().onClick.AddListener(sceneManager.RestartScene);
 
                 Cursor.visible = true;
             }
@@ -32,7 +31,6 @@ namespace OwenGibson
         private void Start()
         {
             player = GameObject.Find("Player");
-            sceneManager = FindObjectOfType<SceneManagerScript>();
             canvas = FindObjectOfType<Canvas>();
         }
     }

@@ -1,45 +1,46 @@
-using OwenGibson;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EndTrigger : MonoBehaviour
+namespace OwenGibson
 {
-    [SerializeField] private GameObject endScreenPrefab;
-    private GameObject endScreen;
-    private bool hasPlayerWon = false;
-
-    private Canvas canvas;
-    private SceneManagerScript sceneManagerScript;
-
-    private void Start()
+    public class EndTrigger : MonoBehaviour
     {
-        canvas = FindObjectOfType<Canvas>();
-        sceneManagerScript = FindObjectOfType<SceneManagerScript>();
-    }
+        [SerializeField] private GameObject endScreenPrefab;
+        private GameObject endScreen;
+        private bool hasPlayerWon = false;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player") && endScreen == null)
+        private Canvas canvas;
+        private SceneManagerScript sceneManagerScript;
+
+        private void Start()
         {
-            endScreen = Instantiate(endScreenPrefab, canvas.transform);
-            hasPlayerWon = true;
-
-        }
-    }
-
-    private void Update()
-    {
-        if (hasPlayerWon && Input.GetKeyDown(KeyCode.R))
-        {
-            Debug.Log("Reloading scene");
-            sceneManagerScript.RestartScene();
+            canvas = FindObjectOfType<Canvas>();
+            sceneManagerScript = FindObjectOfType<SceneManagerScript>();
         }
 
-        if (Input.GetKey(KeyCode.LeftAlt) && Input.GetKey(KeyCode.RightAlt) && Input.GetKey(KeyCode.Return)) // cheat code
+        private void OnTriggerEnter(Collider other)
         {
-            if(endScreen == null) endScreen = Instantiate(endScreenPrefab, canvas.transform);
-            hasPlayerWon = true;
+            if (other.gameObject.CompareTag("Player") && endScreen == null)
+            {
+                endScreen = Instantiate(endScreenPrefab, canvas.transform);
+                hasPlayerWon = true;
+            }
+        }
+
+        private void Update()
+        {
+            if (hasPlayerWon && Input.GetKeyDown(KeyCode.R))
+            {
+                Debug.Log("Reloading scene");
+                sceneManagerScript.RestartScene();
+            }
+
+            if (Input.GetKey(KeyCode.LeftAlt) && Input.GetKey(KeyCode.RightAlt) && Input.GetKey(KeyCode.Return)) // cheat code
+            {
+                if (endScreen == null) endScreen = Instantiate(endScreenPrefab, canvas.transform);
+                hasPlayerWon = true;
+            }
         }
     }
 }
